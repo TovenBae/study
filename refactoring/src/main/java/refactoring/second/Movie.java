@@ -9,14 +9,14 @@ public class Movie {
 	
 	public Movie(String title, int priceCode) {
 		_title = title;
-		_priceCode = priceCode;
+		setPriceCode(priceCode);
 	}
 	
 	public int getPriceCode() {
 		return _priceCode;
 	}
 	
-	public void getPriceCode(int priceCode) {
+	public void setPriceCode(int priceCode) {
 		this._priceCode = priceCode;
 	}
 	public String getTitle() {
