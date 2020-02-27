@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="refactoring.first.Rental" project="refactoring" 
-    file="/refactoring/src/main/java/refactoring/first/Rental.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="155" width="133" x="230" y="278"/>    
+  <class id="1" language="java" name="refactoring.second.Rental" project="refactoring" 
+    file="/refactoring/src/main/java/refactoring/second/Rental.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="173" width="185" x="278" y="175"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="refactoring.first.Movie" project="refactoring" 
-    file="/refactoring/src/main/java/refactoring/first/Movie.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="227" width="145" x="230" y="491"/>    
+  <class id="2" language="java" name="refactoring.second.Movie" project="refactoring" 
+    file="/refactoring/src/main/java/refactoring/second/Movie.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="245" width="145" x="278" y="424"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="refactoring.first.Customer" project="refactoring" 
-    file="/refactoring/src/main/java/refactoring/first/Customer.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="618" y="350"/>    
+  <class id="3" language="java" name="refactoring.second.Customer" project="refactoring" 
+    file="/refactoring/src/main/java/refactoring/second/Customer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="209" width="210" x="503" y="175"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,12 +30,8 @@
   </class>  
   <association id="4">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="5" name="_movie">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="6" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
+      <attribute id="5" name="_movie"/>      
+      <multiplicity id="6" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
