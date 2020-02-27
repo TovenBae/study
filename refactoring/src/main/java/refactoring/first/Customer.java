@@ -4,7 +4,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import refactoring.first.Rental;
-import refactoring.org.Movie;
+import refactoring.first.Movie;
 
 public class Customer {
 	private String _name;
@@ -28,7 +28,7 @@ public class Customer {
 			double thisAmount = 0;
 			Rental each = (Rental) rentals.nextElement();
 			
-			thisAmount = amountFor(each);
+			thisAmount = each.getCharge();
 			
 			// 적립 포인터를 1 포인트 증가
 			frequentRenterPoints ++;
@@ -50,27 +50,6 @@ public class Customer {
 		return result;
 	}
 	
-	private double amountFor(Rental aRental) {
-		double result = 0;
-		// 비디오 종류별 대여료 계산
-		switch (aRental.getMovie().getPriceCode()) {
-			case Movie.REGULAR:
-				result += 2;
-				if (aRental.getDaysRented() > 2) {
-					result += (aRental.getDaysRented() -2) * 1.5;
-				}
-				break;
-			case Movie.NEW_RELEASE:
-				result += aRental.getDaysRented() * 3;
-				break;
-			case Movie.CHILDRENS:
-				result += 1.5;
-				if (aRental.getDaysRented() > 3) {
-					result += (aRental.getDaysRented() -3) * 1.5;
-				}
-				break;
-		}
-		return result;
-	}
+
 	
 }
