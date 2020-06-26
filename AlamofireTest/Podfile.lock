@@ -1,0 +1,32 @@
+PODS:
+  - Alamofire (5.2.1)
+  - NavigationDrawer (1.0.2)
+  - Socket.IO-Client-Swift (15.2.0):
+    - Starscream (~> 3.1)
+  - Starscream (3.1.1)
+  - SwiftSocket (2.0.2)
+
+DEPENDENCIES:
+  - Alamofire (~> 5.2)
+  - NavigationDrawer
+  - Socket.IO-Client-Swift (~> 15.2.0)
+  - SwiftSocket
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - NavigationDrawer
+    - Socket.IO-Client-Swift
+    - Starscream
+    - SwiftSocket
+
+SPEC CHECKSUMS:
+  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
+  NavigationDrawer: 52839d388760436ab3a40dd96938e5df8ef354bb
+  Socket.IO-Client-Swift: 1e3e3a1f09f3312a167f0d781eb2f383d477357c
+  Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
+  SwiftSocket: 6f4c9c63fbc5c1d61188936bb3c599fd546f40ae
+
+PODFILE CHECKSUM: 0ee8d8902882bea162ffae23ab89bc12061e1f22
+
+COCOAPODS: 1.9.3

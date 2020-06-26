@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Socket.IO</title>
+  <meta charset="utf8" />
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <!-- <script src="/socket.io/socket.io.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var socket = io('http://localhost:9000/test').connect();
+
+      socket.on('test', function (data) {
+        var output = '';
+        output += '<li>';
+        output += ' <h3>' + data.nick + '</h3>';
+        output += ' <p>' + data.res + '</p>';
+        output += '</li>';
+        $(output).prependTo('#content');
+      })
+
+      $('button').click(function() {
+        socket.emit('msg', {
+          nick: $('#name').val(),
+          msg: $('#message').val(),
+        })
+      });
+
+    });
+  </script>
+</head>
+<body>
+  <h1>Socket.io</h1>
+  <p>Chat with Node.js</p>
+  <hr />
+  name : <input id="name" />
+  message : <input id="message" />
+  <button id="button">Send</button>
+  <ul id="content">
+  </ul>
+</body>
+</html>
