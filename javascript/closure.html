@@ -1,0 +1,20 @@
+<html>
+<head>
+<script>
+function outer(country) {
+  let language = '한국어';
+  return (function inner(name, age) {
+    console.log(`제 이름은 ${name} 입니다. 저는 ${age}살 입니다.\n
+    저는 ${country}에 살고 ${language}를 사용해요.`);
+  });
+}
+
+let a = outer('한국');
+a("배성한", 22);
+</script>
+</head>
+<body>
+</body>
+</html>
+
+
