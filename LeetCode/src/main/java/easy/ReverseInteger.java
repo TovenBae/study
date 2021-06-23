@@ -81,10 +81,6 @@ public class ReverseInteger {
         x = 0;
         output = 0;
         assertEquals(output, ri.reverse2(x));
-
-        x = 9646324351;
-        output = 1534236469;
-        assertEquals(output, ri.reverse2(x));
     }
 
 }
