@@ -1,6 +1,7 @@
 tmp/
 target/
 logs/
+*.class
 *.tmp
 *.bak
 *.log
