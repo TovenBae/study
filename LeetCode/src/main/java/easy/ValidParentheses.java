@@ -2,6 +2,8 @@ package easy;
 
 import org.junit.Test;
 
+import java.util.Vector;
+
 import static org.junit.Assert.assertEquals;
 
 // https://leetcode.com/problems/valid-parentheses/
@@ -12,10 +14,54 @@ import static org.junit.Assert.assertEquals;
 // 2. Open brackets must be closed in the correct order.
 public class ValidParentheses {
     public boolean isValid(String s) {
-        boolean isTrue = false;
+        boolean isTrue = true;
+        Vector vec = new Vector();
+        for (int i=0; i<s.length(); i++) {
+            checkOpenChar(s.charAt(i), vec);
+            if (!checkCloseChar(s.charAt(i), vec))
+                return false;
+        }
 
+        if (vec.size() > 0)
+            return false;
 
         return isTrue;
+    }
+
+    private boolean checkOpenChar(char c, Vector vec) {
+        switch (c) {
+            case '(' :
+            case '{' :
+            case '[' :
+                vec.add(c);
+                return true;
+            default :
+                return false;
+        }
+    }
+
+    private boolean checkCloseChar(char c, Vector vec) {
+        if (vec.size() == 0) return false;
+
+        switch (c) {
+            case ')' :
+                return checkMatchChar('(', vec);
+            case '}' :
+                return checkMatchChar('{', vec);
+            case ']' :
+                return checkMatchChar('[', vec);
+            default :
+                return true;
+        }
+    }
+
+    private boolean checkMatchChar(char c, Vector vec) {
+        char ch = (char)vec.get(vec.size()-1);
+        if (ch == c) {
+            vec.remove(vec.size()-1);
+            return true;
+        }
+        return false;
     }
 
     @Test
@@ -39,6 +85,14 @@ public class ValidParentheses {
 
         s = "{[]}";
         Output = true;
+        assertEquals(Output, test.isValid(s));
+
+        s = "{";
+        Output = false;
+        assertEquals(Output, test.isValid(s));
+
+        s = "]";
+        Output = false;
         assertEquals(Output, test.isValid(s));
 
     }
