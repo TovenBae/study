@@ -1,14 +1,18 @@
 package easy;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertArrayEquals;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-
 // https://leetcode.com/problems/two-sum/
+
+//  Given an array of integers nums and an integer target,
+//  return indices of the two numbers such that they add up to target.
+//  You may assume that each input would have exactly one solution, and you may not use the same element twice.
+//  You can return the answer in any order.
+
 public class TwoSum {
     public int[] twoSum(int[] nums, int target) {
         int [] rtn = {0, 0};
@@ -44,18 +48,18 @@ public class TwoSum {
         int [] nums = {2,7,11,15};
         int target = 9;
         int [] output = {0,1};
-        Assert.assertArrayEquals(output, ts.twoSum(nums, target));
+        assertArrayEquals(output, ts.twoSum(nums, target));
 //        assertEquals(output, ts.twoSum(nums, target));
 
         nums = new int[]{3, 2, 4};
         target = 6;
         output = new int[]{1,2};
-        Assert.assertArrayEquals(output, ts.twoSum(nums, target));
+        assertArrayEquals(output, ts.twoSum(nums, target));
 
         nums = new int[]{3, 3};
         target = 6;
         output = new int[] {0,1};
-        Assert.assertArrayEquals(output, ts.twoSum(nums, target));
+        assertArrayEquals(output, ts.twoSum(nums, target));
     }
 
 }
