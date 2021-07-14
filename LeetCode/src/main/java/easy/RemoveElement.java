@@ -24,10 +24,18 @@ import static org.junit.Assert.assertEquals;
 //        0 <= val <= 100
 public class RemoveElement {
     public int removeElement(int[] nums, int val) {
-        int rtn = 0;
+        int cnt = 0;
 
-
-        return rtn;
+        for (int i=0; i<(nums.length-cnt); i++) {
+            if (val == nums[i]) {
+                cnt++;
+                for (int j=i; j<(nums.length-cnt); j++) {
+                    nums[j] = nums[j+1];
+                }
+                i--;
+            }
+        }
+        return nums.length-cnt;
     }
 
     @Test
@@ -44,25 +52,10 @@ public class RemoveElement {
         nums = new int[] {0,1,2,2,3,0,4,2};
         val = 2;
         output = 5;
-        expectedNums = new int[] {0,1,4,0,3};
+        expectedNums = new int[] {0,1,3,0,4};
         assertEquals(output, test.removeElement(nums, val));
 
         checkResult(output, nums, expectedNums);
-
-//        int [] nums2 = null;
-//        output = 0; //
-//        int [] expectedNums2 = null;
-//        assertEquals(output, test.removeElement(nums2));
-//
-//        checkResult(output, nums2, expectedNums2);
-//
-//
-//        int [] nums1 = {};
-//        output = 0; //
-//        int [] expectedNums1 = {}; // [];
-//        assertEquals(output, test.removeElement(nums1));
-//
-//        checkResult(output, nums1, expectedNums1);
 
     }
 

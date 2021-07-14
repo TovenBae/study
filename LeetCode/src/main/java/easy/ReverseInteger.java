@@ -5,6 +5,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 // https://leetcode.com/problems/reverse-integer/
+
+//Given a signed 32-bit integer x, return x with its digits reversed.
+// If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1],
+// then return 0.
 public class ReverseInteger {
     public int reverse(int x) {
         int isMinus = 1;
@@ -55,9 +59,9 @@ public class ReverseInteger {
         output = 0;
         assertEquals(output, ri.reverse(x));
 
-//        x = 1534236469;
-//        output = 9646324351;
-//        assertEquals(output, ri.reverse(x));
+        x = 153423646;
+        output = 646324351;
+        assertEquals(output, ri.reverse(x));
     }
 
     @Test
