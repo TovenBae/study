@@ -4,13 +4,13 @@ from ListNode import ListNode
 # https://leetcode.com/problems/add-binary/
 
 class Solution(unittest.TestCase):
-    def deleteDuplicates(head):
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
         if (head == None): return None
         rtn = ListNode(head.val)
         while(head.next != None):
             head = head.next
             if (head.val > rtn.val):
-                rtn.next = Solution.deleteDuplicates(head)
+                rtn.next = Solution.deleteDuplicates(self, head)
                 break
         return rtn
 
@@ -20,7 +20,7 @@ class Solution(unittest.TestCase):
         head = ListNode(1, head)
         output = ListNode(2)
         output = ListNode(1, output)
-        head = Solution.deleteDuplicates(head)
+        head = Solution.deleteDuplicates(self, head)
 
     def checkResult(self, output, head):
         i = 0
