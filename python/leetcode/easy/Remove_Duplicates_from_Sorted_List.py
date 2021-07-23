@@ -21,6 +21,7 @@ class Solution(unittest.TestCase):
         output = ListNode(2)
         output = ListNode(1, output)
         head = Solution.deleteDuplicates(self, head)
+        Solution.checkResult(self, output, head)
 
     def checkResult(self, output, head):
         i = 0
