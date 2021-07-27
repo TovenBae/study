@@ -1,4 +1,4 @@
-# from hamcrest import * 
+from hamcrest import * 
 # ModuleNotFoundError: No module named 'hamcrest' -> $ conda install PyHamcrest
 import unittest
 
@@ -39,7 +39,7 @@ class Solution(unittest.TestCase) :
         root.right = sub
         isTrue = Solution.isSymmetric(self, root)
         self.assertEqual(True, isTrue)
-        # self.assert_that(isTrue, equal_to(True))
+        assert_that(isTrue, equal_to(True))
 
         root = TreeNode(1)
         sub = TreeNode(2, None, TreeNode(3))
@@ -48,6 +48,7 @@ class Solution(unittest.TestCase) :
         root.right = sub
         isTrue = Solution.isSymmetric(self, root)
         self.assertEqual(False, isTrue)
+        # assert_that(isTrue, equal_to(False))
 
         root = TreeNode(1)
         sub = TreeNode(2, TreeNode(3), TreeNode(4))
