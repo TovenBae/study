@@ -2,7 +2,7 @@ package easy;
 
 import org.junit.Test;
 
-import java.util.Stack;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.equalTo;
@@ -50,31 +50,77 @@ public class MaximumDepthofBinaryTree {
 
         int depth = 0;
         int maxDepth = 0;
-        boolean isPop = false;
         Stack<TreeNode> stack = new Stack<TreeNode>();
+        Stack<Integer> level = new Stack<Integer>();
         while(root != null || !stack.isEmpty()) {
             while(root != null) {
-                stack.push(root);
-                isPop = false;
                 depth++;
+                stack.push(root);
+                level.push(depth);
 
                 if (maxDepth < depth) {
                     maxDepth = depth;
                 }
-
                 root = root.left;
-
             }
             root = stack.pop();
-            if (isPop) {
-                depth --;
-            }
-            isPop = true;
+            depth = level.pop();
             root = root.right;
 
         }
 
         return maxDepth;
+    }
+
+    // Solution : DFS
+    public int maxDepth1(TreeNode root) {
+        if(root == null) {
+            return 0;
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        Stack<Integer> value = new Stack<>();
+        stack.push(root);
+        value.push(1);
+        int max = 0;
+        while(!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            int temp = value.pop();
+            max = Math.max(temp, max);
+            if(node.left != null) {
+                stack.push(node.left);
+                value.push(temp+1);
+            }
+            if(node.right != null) {
+                stack.push(node.right);
+                value.push(temp+1);
+            }
+        }
+        return max;
+    }
+
+    // solution : BFS
+    public int maxDepth3(TreeNode root) {
+        if(root == null) {
+            return 0;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int count = 0;
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            while(size-- > 0) {
+                TreeNode node = queue.poll();
+                if(node.left != null) {
+                    queue.offer(node.left);
+                }
+                if(node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            count++;
+        }
+        return count;
     }
 
     @Test
@@ -130,10 +176,9 @@ public class MaximumDepthofBinaryTree {
         assertThat(result, equalTo(output));
 
         // [0,2,4,1,null,3,-1,5,1,null,6,null,8]
-
         root = new TreeNode(0, new TreeNode(2), new TreeNode(4));
         sub = root.left;
-        sub.left = new TreeNode(1, new TreeNode(5), new TreeNode(1));
+        sub.left = new TreeNode(1, new TreeNode(5), new TreeNode(7));
         sub = root.right;
         sub.left = new TreeNode(3, null, new TreeNode(6));
         sub.right = new TreeNode(-1, null, new TreeNode(8));
