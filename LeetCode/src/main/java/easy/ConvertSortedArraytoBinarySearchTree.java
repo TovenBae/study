@@ -1,6 +1,9 @@
 package easy;
 
 import org.junit.Test;
+
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -43,37 +46,70 @@ import static org.hamcrest.Matchers.equalTo;
  * }
  */
 public class ConvertSortedArraytoBinarySearchTree {
-    public TreeNode sortedArrayToBST(int[] nums) {
+    public TreeNode sortedArrayToBST2(int[] nums) {
+        if (nums == null) {
+            return null;
+        } else if (nums.length == 1) {
+            return new TreeNode(nums[0]);
+        } else if (nums.length == 2) {
+//            return new TreeNode(nums[0], null, new TreeNode(nums[1]));
+            return new TreeNode(nums[1], new TreeNode(nums[0]), null);
+        } else if (nums.length == 3) {
+            return new TreeNode(nums[1], new TreeNode(nums[0]), new TreeNode(nums[2]));
+        }
+
         TreeNode result = new TreeNode();
+        int midPos = nums.length / 2 + nums.length % 2 - 1;
 
-        int midPos = nums.length / 2;
-
+        result.val = nums[midPos];
+        result.left = sortedArrayToBST(Arrays.copyOfRange(nums, 0, midPos));
+        result.right = sortedArrayToBST(Arrays.copyOfRange(nums, midPos+1, nums.length));
 
         return result;
     }
 
-    public boolean isSameTree(TreeNode p, TreeNode q) {
-        // p and q are both null
-        if (p == null && q == null) return true;
-        // one of p and q is null
-        if (q == null || p == null) return false;
-        if (p.val != q.val) return false;
-        return isSameTree(p.right, q.right) &&
-                isSameTree(p.left, q.left);
+    // Solution #1
+    public TreeNode sortedArrayToBST(int[] num) {
+        if (num.length == 0) {
+            return null;
+        }
+        TreeNode head = helper(num, 0, num.length - 1);
+        return head;
     }
 
-    @Test
+    public TreeNode helper(int[] num, int low, int high) {
+        if (low > high) { // Done
+            return null;
+        }
+        int mid = (low + high) / 2;
+        TreeNode node = new TreeNode(num[mid]);
+        node.left = helper(num, low, mid - 1);
+        node.right = helper(num, mid + 1, high);
+        return node;
+    }
+
+   @Test
     public void test() {
         ConvertSortedArraytoBinarySearchTree test = new ConvertSortedArraytoBinarySearchTree();
         TreeNode output = null;
         TreeNode sub = null;
 
-        1,2,3,4,5,6,7,8,9,10
+//        1,2,3,4,5,6,7,8,9,10
+//                    5
+//               3         8
+//            2   4    7    10
+//        1          6     9
 
-                 6
-            2         8
-        1      3
+        //        1,2,3,4,5,6,7,8,9,10,11,12,13,14
+//                      7
+//               3                11
+//            2       5      9          13
+//          1       4   6   8   10    12  14
+
         int [] nums = {-10,-3,0,5,9};
+//              0
+//           -3     9
+//        -10     5
         // output = {0,-3,9,-10,null,5};
         output = new TreeNode(0);
         sub = new TreeNode(-3, new TreeNode(-10), null);
@@ -84,10 +120,21 @@ public class ConvertSortedArraytoBinarySearchTree {
         assertThat(isSameTree(result, output), equalTo(true));
 
         nums = new int[]{1,3};
-        // output = {3,1};
-        output = new TreeNode(3, null, new TreeNode(1));
+        // output = {3,1} or {1,3};
+//        output = new TreeNode(1, null, new TreeNode(3));
+        output = new TreeNode(3,  new TreeNode(1), null);
         result = test.sortedArrayToBST(nums);
         assertThat(isSameTree(result, output), equalTo(true));
 
+    }
+
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        // p and q are both null
+        if (p == null && q == null) return true;
+        // one of p and q is null
+        if (q == null || p == null) return false;
+        if (p.val != q.val) return false;
+        return isSameTree(p.right, q.right) &&
+                isSameTree(p.left, q.left);
     }
 }
