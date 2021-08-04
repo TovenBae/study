@@ -17,7 +17,7 @@ public class ReverseInteger {
             x = x * -1;
         }
         String x1 = "" + x;
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i=x1.length()-1; i>=0; i--) {
             sb.append(x1.charAt(i));
         }
@@ -39,8 +39,8 @@ public class ReverseInteger {
 
     @Test
     public void test() {
-        int x = 0;
-        int output = 0;
+        int x;
+        int output;
         ReverseInteger ri = new ReverseInteger();
 
         x = 123;
@@ -66,8 +66,8 @@ public class ReverseInteger {
 
     @Test
     public void test2() {
-        int x = 0;
-        int output = 0;
+        int x;
+        int output;
         ReverseInteger ri = new ReverseInteger();
 
         x = 123;
