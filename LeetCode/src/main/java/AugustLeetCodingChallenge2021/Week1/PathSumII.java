@@ -3,6 +3,7 @@ package AugustLeetCodingChallenge2021.Week1;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
@@ -49,35 +50,29 @@ public class PathSumII {
         return lList;
     }
 
+    List<List<Integer>> llist = new ArrayList<>();
     public List<List<Integer>> pathSum2(TreeNode root, int targetSum) {
         if (root == null) return new ArrayList<>();
 
-        List<List<Integer>> llist = new ArrayList<>();
-        if (helper(root, targetSum, llist, new ArrayList<Integer>())) {
-            return llist;
-        } else {
-            return new ArrayList<>();
-        }
+        helper(root, targetSum, new ArrayList<Integer>());
+
+        return llist;
     }
 
-    public boolean helper(TreeNode root, int targetSum, List<List<Integer>> llist, List<Integer> list) {
-        if (root == null) return false;
+    public void helper(TreeNode root, int targetSum, List<Integer> list) {
+        if (root == null) return;
+
+        list.add(root.val);
 
         if (root.left == null && root.right == null && targetSum == root.val) {
-            list.add(root.val);
-            llist.add(list);
-            return true;
+            llist.add(new ArrayList<>(list));
         }
 
-        if (helper(root.left, targetSum - root.val, llist, list)) {
-            list.add(root.val);
-            return true;
-        }
-        if (helper(root.right, targetSum - root.val, llist, list)) {
-            list.add(root.val);
-            return true;
-        }
-        return false;
+        helper(root.left, targetSum - root.val, list);
+
+        helper(root.right, targetSum - root.val, list);
+
+        list.remove(list.size() -1);
     }
 
     @Test
@@ -93,12 +88,16 @@ public class PathSumII {
                                 new TreeNode(2)),
                         null),
                 new TreeNode(8,
-                        new TreeNode(13),
-                        new TreeNode(4,
+                        new TreeNode(4),
+                        new TreeNode(7,
                                 null,
-                                new TreeNode(1)))
+                                new TreeNode(2)))
         );
-        assertThat(test.pathSum(root, 22), equalTo(null));
+        List<List<Integer>> output = Arrays.asList(
+                Arrays.asList(5, 4, 11, 2),
+                Arrays.asList(5, 8, 7, 2));
+        assertThat(test.pathSum(root, 22), equalTo(output));
+        assertThat(test.pathSum2(root, 22), equalTo(output));
 
     }
 }
