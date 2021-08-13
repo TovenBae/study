@@ -46,8 +46,27 @@ public class BestTimetoBuyandSellStock {
         return maxProfits;
     }
 
+    public int maxProfit(int [] prices) {
+        if (prices.length == 0)
+            return 0;
+
+        int maxProfit = 0;
+        int minBuy = Integer.MAX_VALUE;
+        for (int i=0; i<prices.length; i++) {
+            if (prices[i] < minBuy)
+                minBuy = prices[i];
+            else {
+                if (maxProfit < (prices[i] - minBuy)) {
+                    maxProfit = prices[i] - minBuy;
+                }
+            }
+        }
+
+        return maxProfit;
+    }
+
     // Solution : One Pass
-    public int maxProfit3(int prices[]) {
+    public int maxProfit_sol1(int prices[]) {
         int minprice = Integer.MAX_VALUE;
         int maxprofit = 0;
         for (int i = 0; i < prices.length; i++) {
@@ -60,7 +79,7 @@ public class BestTimetoBuyandSellStock {
     }
 
     // Solution :
-    public int maxProfit(int[] prices) {
+    public int maxProfit_sol2(int[] prices) {
         int ans=0;
         if(prices.length==0)
         {
