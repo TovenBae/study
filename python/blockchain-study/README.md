@@ -4,12 +4,12 @@ ref :
 
 * flask-restful 설치
 ```
-pip install flask-restful
+$ pip install flask-restful
 ```
 
 * 실행
 ```
-python server.py
+$ python server.py
 ```
 
 * 테스트
@@ -20,10 +20,14 @@ python server.py
     http://localhost:5000/transaction
 - unittest : call Method
 ```
-python testA.py
+$ python testA.py
 ```
 
 - unittest : call Url
 ```
-python testB.py
+# 전체 실행
+$ python testB.py
+
+# Method 실행
+$ python -m unittest testA.BlockChainTest.test_add_node
 ```

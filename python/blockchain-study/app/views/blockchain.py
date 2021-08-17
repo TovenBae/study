@@ -44,6 +44,8 @@ class Mine(Resource):
         if not all([node_id]):
             return Response('', 400)
 
+        # print ('blockchain.nodes size : ' + str(len(blockchain.nodes)))
+        # print (blockchain.nodes)
         if node_id not in blockchain.nodes:
             return Response('Invalid node id', 400)
         
@@ -52,7 +54,7 @@ class Mine(Resource):
 
         blockchain.new_transaction(
             sender = '0',
-            recipient= node_id,
+            recipient = node_id,
             amount = 1
         )
 
@@ -82,6 +84,8 @@ class Transaction(Resource):
         if not all([sender, recipient, amount]):
             return Response('', 400)
 
+        print(req)
+        print(blockchain.nodes)
         if sender not in blockchain.nodes or recipient not in blockchain.nodes:
             return Response('Invalid sender id or recipient id', 400)
     
