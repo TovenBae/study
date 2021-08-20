@@ -41,6 +41,7 @@ public class BestTimetoBuyandSellStockII {
         if (prices.length == 0 )
             return 0;
 
+        int sumProfit = 0;
         int maxProfit = 0;
         int minPrice = Integer.MAX_VALUE;
         List<Integer> minBuy = new ArrayList<>();
@@ -49,15 +50,18 @@ public class BestTimetoBuyandSellStockII {
                 minPrice = prices[i];
             } else if (maxProfit < (prices[i] - minPrice)) {
                 maxProfit = prices[i] - minPrice;
+                sumProfit += maxProfit;
+                maxProfit = 0;
+                minPrice = Integer.MAX_VALUE;
             }
 
         }
-        return maxProfit;
+        return sumProfit;
     }
 
     @Test
     public void test() {
-        BestTimetoBuyandSellStock test = new BestTimetoBuyandSellStock();
+        BestTimetoBuyandSellStockII test = new BestTimetoBuyandSellStockII();
         int [] prices;
 
         prices = new int[]{7,1,5,3,6,4};
