@@ -29,10 +29,6 @@ package easy;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -44,12 +40,13 @@ public class BestTimetoBuyandSellStockII {
         int sumProfit = 0;
         int maxProfit = 0;
         int minPrice = Integer.MAX_VALUE;
-        List<Integer> minBuy = new ArrayList<>();
+        int minPrice2 = Integer.MAX_VALUE;
         for (int i=0; i<prices.length; i++) {
             if (prices[i] < minPrice) {
                 minPrice = prices[i];
             } else if (maxProfit < (prices[i] - minPrice)) {
                 maxProfit = prices[i] - minPrice;
+
                 sumProfit += maxProfit;
                 maxProfit = 0;
                 minPrice = Integer.MAX_VALUE;
@@ -59,19 +56,74 @@ public class BestTimetoBuyandSellStockII {
         return sumProfit;
     }
 
+    // solution
+    public int maxProfit_sol1(int[] prices) {
+        return calculate(prices, 0);
+    }
+
+    public int calculate(int prices[], int s) {
+        if (s >= prices.length)
+            return 0;
+        int max = 0;
+        for (int start = s; start < prices.length; start++) {
+            int maxprofit = 0;
+            for (int i = start + 1; i < prices.length; i++) {
+                if (prices[start] < prices[i]) {
+                    int profit = calculate(prices, i + 1) + prices[i] - prices[start];
+                    if (profit > maxprofit)
+                        maxprofit = profit;
+                }
+            }
+            if (maxprofit > max)
+                max = maxprofit;
+        }
+        return max;
+    }
+
+    // Solution 2
+    public int maxProfit_sol2(int[] prices) {
+        int i = 0;
+        int valley = prices[0];
+        int peak = prices[0];
+        int maxprofit = 0;
+        while (i < prices.length - 1) {
+            while (i < prices.length - 1 && prices[i] >= prices[i + 1])
+                i++;
+            valley = prices[i];
+            while (i < prices.length - 1 && prices[i] <= prices[i + 1])
+                i++;
+            peak = prices[i];
+            maxprofit += peak - valley;
+        }
+        return maxprofit;
+    }
+
+    // solution 3
+    public int maxProfit_sol3(int[] prices) {
+        int maxprofit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i - 1])
+                maxprofit += prices[i] - prices[i - 1];
+        }
+        return maxprofit;
+    }
+
     @Test
     public void test() {
         BestTimetoBuyandSellStockII test = new BestTimetoBuyandSellStockII();
         int [] prices;
 
         prices = new int[]{7,1,5,3,6,4};
-        assertThat(test.maxProfit(prices), equalTo(7));
+        assertThat(test.maxProfit_sol3(prices), equalTo(7));
 
         prices = new int[]{1,2,3,4,5};
-        assertThat(test.maxProfit(prices), equalTo(4));
+        assertThat(test.maxProfit_sol3(prices), equalTo(4));
 
         prices = new int[]{7,6,4,3,1};
-        assertThat(test.maxProfit(prices), equalTo(0));
+        assertThat(test.maxProfit_sol3(prices), equalTo(0));
+
+        prices = new int[]{1,3,2,4,5};
+        assertThat(test.maxProfit_sol3(prices), equalTo(5));
 
     }
 }
