@@ -33,15 +33,28 @@ public class ValidPalindrome {
     public boolean isPalindrome(String s) {
         if (s == null || s.equals("")) return false;
 
-        s = s.toLowerCase(Locale.ROOT);
-        int j = 0;
-        for(int i=0; i<s.length()/2; i++) {
-            if (s.charAt(i) < 'a' || s.charAt(i) > 'z') {
-                j++;
+        s = s.toLowerCase();
+        int j = s.length()-1;
+        for(int i=0; i<j; i++) {
+            if (!isAlphaNumeric(s.charAt(i))) {
                 continue;
             }
+            while(!isAlphaNumeric(s.charAt(j))) {
+                j--;
+            }
+            if (s.charAt(i) != s.charAt(j))
+                return false;
+            else
+                j--;
         }
         return true;
+    }
+
+    private boolean isAlphaNumeric(char c) {
+        if ((c >= 'a' && c <='z') || (c >= '0' && c <= '9')) {
+            return true;
+        }
+        return false;
     }
 
     @Test
@@ -52,5 +65,27 @@ public class ValidPalindrome {
 
         s = "race a car";
         assertThat(test.isPalindrome(s), equalTo(false));
+
+        s = "0P";
+        assertThat(test.isPalindrome(s), equalTo(false));
+
+        s = ",P";
+        assertThat(test.isPalindrome(s), equalTo(true));
+
+        s = ",,,,,P";
+        assertThat(test.isPalindrome(s), equalTo(true));
+
+        s = "P,,,,,P";
+        assertThat(test.isPalindrome(s), equalTo(true));
+
+        s = " ";
+        assertThat(test.isPalindrome(s), equalTo(true));
+
+        s = ",,,,";
+        assertThat(test.isPalindrome(s), equalTo(true));
+
+        s = "a";
+        assertThat(test.isPalindrome(s), equalTo(true));
+
     }
 }

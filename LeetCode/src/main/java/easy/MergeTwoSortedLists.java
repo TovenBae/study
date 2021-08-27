@@ -2,6 +2,8 @@ package easy;
 
 import org.junit.Test;
 
+import java.util.Stack;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -101,11 +103,107 @@ public class MergeTwoSortedLists {
         if (l2 == null) { return l1; }
 
         if (l1.val < l2.val) {
-            l1.next = mergeTwoLists(l1.next, l2);
+            l1.next = mergeTwoLists_sk(l1.next, l2);
             return l1;
         } else {
-            l2.next = mergeTwoLists(l1, l2.next);
+            l2.next = mergeTwoLists_sk(l1, l2.next);
             return l2;
+        }
+    }
+
+    public ListNode mergeTwoLists_sk(ListNode l1, ListNode l2) {
+
+        ListNode bigNext = l1.val >= l2.val ? l1 : l2;
+        ListNode smallNext = l1.val >= l2.val ? l2 : l1;
+
+        Stack<Integer> stack = new Stack<>();
+        // stack에 작은 순으로 쌓는데
+        while (bigNext != null || smallNext != null) {
+            // big > small => small 숫자 샇기
+            if ((bigNext != null && smallNext != null) && bigNext.val > smallNext.val) {
+                stack.push(smallNext.val);
+                smallNext = smallNext.next;
+            } else if ((bigNext != null && smallNext != null) && bigNext.val <= smallNext.val) {
+                // big <= small => big 숫자 샇기
+                stack.push(bigNext.val);
+                bigNext = bigNext.next;
+            } else if (bigNext != null && smallNext == null){
+                // big은 남았지만 small은 없는 상태
+                stack.push(bigNext.val);
+                bigNext = bigNext.next;
+            } else if (bigNext == null && smallNext != null) {
+                stack.push(smallNext.val);
+                smallNext = smallNext.next;
+            }
+        }
+
+        ListNode nextNode = null;
+        ListNode resultNode = null;
+        int i = 0;
+        // stack으로 nodelist 만들기
+        while (stack.size() > 0) {
+            int a  = stack.pop();
+            if (i == 0) {
+                nextNode = new ListNode(a);
+            } else {
+                resultNode = new ListNode(a, nextNode);
+                nextNode = resultNode;
+            }
+            i++;
+        }
+        return resultNode;
+    }
+
+    public void addListNode(ListNode input, int val) {
+        if(input==null) {
+            input = new ListNode(val);                //헤드가 비어있다면 헤드로 지정
+        }else {
+            ListNode node = input;                    //첫 탐색 노드를 헤드로 잡고
+            while(node.next != null){                 //헤드의 다음이 있다면
+                node = node.next;                       //다음 노드로 포인터 이동
+            }
+            node.next = new ListNode(val);          //다음 노드가 있고 없고에 따라 포인터가 헤드 혹은 일반 노드로 설정 됨으로 그 다음 노드를 설정
+        }
+    }
+    public ListNode mergeTwoLists_noori(ListNode l1, ListNode l2){
+        ListNode node = l1;
+        ListNode head = l1;
+        while(node.next != null){
+            node = node.next;
+        }
+        node.next=l2;
+        while(node.next != null){
+            node = node.next;
+        }
+        node = head;
+        try {
+            sortingASC(node);
+
+        } catch(Exception e) {
+            ;
+        }
+        return node;
+    }
+
+    public void sortingASC(ListNode input) throws InterruptedException {
+        ListNode node = input;
+        ListNode head = input;
+        while(node.next != null){
+            if(node.next.val<node.val) {              //현재 가리키는 노드와 다음 노드값을 비교 다음 노드값이 크다면
+                ListNode temp = new ListNode(node.val); //임시 노드를 만들어주고
+                temp.next = node.next.next;             //포인터 할당
+                node.val = node.next.val;               //현재 가리키는 노드값을 다음 노드값으로 변환해주고
+                node.next = temp;                       //현재 노드에 포인터 할당
+                node = head;                            //다시 처음부터 탐색
+            }else {
+                node = node.next;                       //정렬 할 일이 없으면 다음 노드로 포인터 이동
+            }
+        }
+        node = head;
+        System.out.print(node.val);
+        while(node.next != null){
+            node = node.next;
+            System.out.print("->"+node.val);
         }
     }
 
@@ -127,23 +225,23 @@ public class MergeTwoSortedLists {
         Output = new ListNode(1, Output);
         Output = new ListNode(1, Output); // : [1,1,2,3,4,4];
 
-        checkEqualsListNode(Output, test.mergeTwoLists(l1, l2));
+        checkEqualsListNode(Output, test.mergeTwoLists_noori(l1, l2));
 
         ListNode l3 = null; // [];
         ListNode l4 = null; // [];
         ListNode Output2 = null;  // [];
-        checkEqualsListNode(Output2, test.mergeTwoLists(l3, l4));
+        checkEqualsListNode(Output2, test.mergeTwoLists_noori(l3, l4));
 
         l1 = new ListNode(); // [];
         l2 = new ListNode(0); // [0];
         Output = new ListNode(); // [0];
-        checkEqualsListNode(Output, test.mergeTwoLists(l1, l2));
+        checkEqualsListNode(Output, test.mergeTwoLists_noori(l1, l2));
 
         l1 = new ListNode(1); // [1];
         l2 = new ListNode(2); // [2];
         Output = new ListNode(1); // [1,2];
         Output.next = new ListNode(2);
-        checkEqualsListNode(Output, test.mergeTwoLists(l1, l2));
+        checkEqualsListNode(Output, test.mergeTwoLists_noori(l1, l2));
 
         l1 = new ListNode(-9); //
         l1.next = new ListNode(3); // [-9,3]
@@ -153,7 +251,7 @@ public class MergeTwoSortedLists {
         Output = new ListNode(5, Output);
         Output = new ListNode(3, Output);
         Output = new ListNode(-9, Output); // [-9, 3,5,7];
-        checkEqualsListNode(Output, test.mergeTwoLists(l1, l2));
+        checkEqualsListNode(Output, test.mergeTwoLists_noori(l1, l2));
     }
 
     private void checkEqualsListNode(ListNode a, ListNode o) {
