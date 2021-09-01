@@ -24,8 +24,8 @@ export default  {
     methods: {
         addMarker() {
             EventBus.$emit('add-marker', {
-                latitude: this.latitude,
-                longitude: this.longitude
+                latitude: Number(this.latitude),
+                longitude: Number(this.longitude)
             })
         },
         clearMarkers() {

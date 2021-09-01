@@ -62,22 +62,44 @@ public class BinaryTreePostorderTraversal {
 
         List<Integer> result = new ArrayList<>();
         Stack<TreeNode> stack = new Stack<>();
+        TreeNode last = null;
         while(root != null || !stack.isEmpty()) {
-            if (root.left != null) {
+            if (root != null) {
                 stack.push(root);
                 root = root.left;
             } else {
-                if (root.right != null) {
-                    root = root.right;
-                } else {
-                    result.add(root.val);
+                root = stack.peek();
+                if (root.right == null || last == root.right) {
                     root = stack.pop();
                     result.add(root.val);
+                    last = root;
+                    root = null;
+                } else {
                     root = root.right;
                 }
             }
         }
         return result;
+    }
+
+    // reculsive
+    public List<Integer> postorderTraversal_recul(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+
+        reculsive(root, result);
+
+        return result;
+    }
+
+    public void reculsive(TreeNode root, List<Integer> result) {
+        if (root == null)
+            return;
+
+        reculsive(root.left, result);
+        reculsive(root.right, result);
+        if (root != null)
+            result.add(root.val);
+
     }
 
     @Test
@@ -88,22 +110,22 @@ public class BinaryTreePostorderTraversal {
 
         // [1,null,2,3]
         root = new TreeNode(1, null, new TreeNode(2, new TreeNode(3), null));
-        assertThat(test.postorderTraversal(root), equalTo(Arrays.asList(3,2,1)));
+        assertThat(test.postorderTraversal_recul(root), equalTo(Arrays.asList(3,2,1)));
 
         root = null;
-        assertThat(test.postorderTraversal(root), equalTo(Arrays.asList()));
+        assertThat(test.postorderTraversal_recul(root), equalTo(Arrays.asList()));
 
         root = new TreeNode(1);
-        assertThat(test.postorderTraversal(root), equalTo(Arrays.asList(1)));
+        assertThat(test.postorderTraversal_recul(root), equalTo(Arrays.asList(1)));
 
         root = new TreeNode(1, new TreeNode(2), null);
-        assertThat(test.postorderTraversal(root), equalTo(Arrays.asList(2,1)));
+        assertThat(test.postorderTraversal_recul(root), equalTo(Arrays.asList(2,1)));
 
         root = new TreeNode(1, null, new TreeNode(2));
-        assertThat(test.postorderTraversal(root), equalTo(Arrays.asList(2, 1)));
+        assertThat(test.postorderTraversal_recul(root), equalTo(Arrays.asList(2, 1)));
 
         // [1,4,3,2]
         root = new TreeNode(1, new TreeNode(4, new TreeNode(2), null), new TreeNode(3));
-        assertThat(test.postorderTraversal(root), equalTo(Arrays.asList(2,4,3,1)));
+        assertThat(test.postorderTraversal_recul(root), equalTo(Arrays.asList(2,4,3,1)));
     }
 }
