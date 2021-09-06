@@ -2,6 +2,11 @@ package easy;
 
 // https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/
 
+import org.junit.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+
 /**
  * Given an array of integers numbers that is already sorted in non-decreasing order, find two numbers such
  * that they add up to a specific target number.
@@ -29,8 +34,54 @@ package easy;
  * The tests are generated such that there is exactly one solution.
  */
 public class TwoSumII {
-    public int[] twoSum(int[] numbers, int target) {
+    public int[] twoSum2(int[] numbers, int target) {
+        if (numbers.length < 2) return null;
 
-        return new int[]{};
+        for (int i=1; i<numbers.length; i++) {
+            for (int j=0; j<i; j++) {
+                if (target - numbers[j] - numbers[i] == 0)
+                    return new int[]{j+1, i+1};
+            }
+        }
+        return null;
+    }
+
+    public int[] twoSum(int[] numbers, int target) {
+        if (numbers.length < 2) return null;
+
+        int s = 0, e  = numbers.length -1;
+        while(target != numbers[s] + numbers[e]) {
+            if (target < numbers[s] + numbers[e]) e--;
+            else s++;
+        }
+        return new int[]{s+1, e+1};
+    }
+
+    @Test
+    public void test() {
+        int [] numbers = {};
+        int target;
+        TwoSumII test = new TwoSumII();
+
+        numbers = new int[]{2, 7, 11, 15};
+        target = 9;
+        assertThat(test.twoSum(numbers, target), equalTo(new int []{1,2}));
+
+        numbers = new int[]{2,3,4};
+        target = 6;
+        assertThat(test.twoSum(numbers, target), equalTo(new int []{1,3}));
+
+        numbers = new int[]{-1, 0};
+        target = -1;
+        assertThat(test.twoSum(numbers, target), equalTo(new int []{1,2}));
+
+        numbers = new int[]{2, 7, 11, 15};
+        target = 18;
+        assertThat(test.twoSum(numbers, target), equalTo(new int []{2,3}));
+
+        numbers = new int[]{0, 0, 3, 4};
+        target = 0;
+        assertThat(test.twoSum(numbers, target), equalTo(new int []{1,2}));
+
     }
 }

@@ -106,8 +106,33 @@ public class IntersectionofTwoLinkedLists {
         }
         return result;
     }
-
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) return null;
+
+        ListNode a = headA;
+        ListNode b = headB;
+        int lenA = 0, lenB = 0;
+        while(a != null) {
+            lenA++;
+            a = a.next;
+        }
+        while(b != null ) {
+            lenB++;
+            b = b.next;
+        }
+        for (int i=0; i<(lenA - lenB); i++)
+            headA = headA.next;
+        for (int i=0; i<(lenB - lenA); i++)
+            headB = headB.next;
+
+        while(headA != headB) {
+            headA = headA.next;
+            headB = headB.next;
+        }
+        return headA;
+    }
+    // Solution 1
+    public ListNode getIntersectionNode_sol1(ListNode headA, ListNode headB) {
         //boundary check
         if(headA == null || headB == null) return null;
 

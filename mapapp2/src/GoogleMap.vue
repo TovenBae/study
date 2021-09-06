@@ -96,7 +96,7 @@ export default  {
                 }, {
                     position: {
                         lat: 37.505205,
-                        lng: 128.049554
+                        lng: 127.0497
                     },
                     infoText: 'Marker 2 '
                 }]
