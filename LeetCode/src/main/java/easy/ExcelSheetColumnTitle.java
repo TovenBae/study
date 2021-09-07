@@ -45,12 +45,29 @@ public class ExcelSheetColumnTitle {
         int mok = columnNumber / 26;
         int rest = columnNumber % 26;
         String columnTitle = "";
-        while(mok > 0) {
-            columnTitle += Character.toString((char)(mok + 64));
+        boolean isLoop = true;
+        while(isLoop) {
+            if (mok > 26) {
+                columnTitle += numberToStr(rest);
+            }
+            else {
+                if (mok > 0 && rest > 0)
+                    columnTitle += numberToStr(mok);
+                columnTitle += numberToStr(rest);
+                isLoop = false;
+            }
+
+            rest = (mok) % 26;
             mok = mok / 26;
         }
-        columnTitle += Character.toString((char)(rest + 64));
         return columnTitle;
+    }
+
+    private String numberToStr(int num) {
+        if (num == 0)
+            return "Z";
+        else
+            return Character.toString((char)(num + 64));
     }
 
     @Test
@@ -59,9 +76,17 @@ public class ExcelSheetColumnTitle {
 
         assertThat(test.convertToTitle(1), equalTo("A"));
 
+        assertThat(test.convertToTitle(26), equalTo("Z"));
+
+        assertThat(test.convertToTitle(27), equalTo("AA"));
+
         assertThat(test.convertToTitle(28), equalTo("AB"));
 
         assertThat(test.convertToTitle(701), equalTo("ZY"));
+
+        assertThat(test.convertToTitle(702), equalTo("ZZ"));
+
+        assertThat(test.convertToTitle(703), equalTo("AAA"));
 
         assertThat(test.convertToTitle(2147483647), equalTo("FXSHRXW"));
     }
