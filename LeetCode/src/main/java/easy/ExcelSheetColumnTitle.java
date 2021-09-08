@@ -41,36 +41,16 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class ExcelSheetColumnTitle {
     public String convertToTitle(int columnNumber) {
-        // "A" : 65
-        int mok = columnNumber / 26;
-        int rest = columnNumber % 26;
         String columnTitle = "";
-        boolean isLoop = true;
-        while(isLoop) {
-            if (mok > 26) {
-                columnTitle += numberToStr(rest);
-            }
-            else {
-                if (mok > 0 && rest > 0)
-                    columnTitle += numberToStr(mok);
-                columnTitle += numberToStr(rest);
-                isLoop = false;
-            }
 
-            rest = (mok) % 26;
-            mok = mok / 26;
+        while(--columnNumber >= 0) {
+            columnTitle = (char)(columnNumber % 26 + 'A') + columnTitle;
+            columnNumber /= 26;
         }
         return columnTitle;
     }
 
-    private String numberToStr(int num) {
-        if (num == 0)
-            return "Z";
-        else
-            return Character.toString((char)(num + 64));
-    }
-
-    @Test
+     @Test
     public void test() {
         ExcelSheetColumnTitle test = new ExcelSheetColumnTitle();
 
