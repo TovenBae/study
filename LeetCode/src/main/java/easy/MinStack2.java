@@ -44,7 +44,7 @@ public class MinStack2 {
 
     @Test
     public void test() {
-        MinStack minStack = new MinStack();
+        E155_MinStack minStack = new E155_MinStack();
         minStack.push(-2);
         minStack.push(0);
         minStack.push(-3);
