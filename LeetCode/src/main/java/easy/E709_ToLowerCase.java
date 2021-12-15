@@ -43,8 +43,8 @@ public class E709_ToLowerCase {
         for(int i=0; i<char_arr.length; ++i){
             if(65<=char_arr[i] && char_arr[i]<=90){                    //문자열의 아스키코드의 값이 65~90의 알파벳 대문자라면
                 char_arr[i]=(char)(char_arr[i]+32);                    //32를 더해 소문자로 변환
-            }
             result = result+Character.toString(char_arr[i]);    //결과를 담아준다
+            }
         }
         System.out.println(result);
         return result;
