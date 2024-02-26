@@ -1,0 +1,6 @@
+go 1.19
+
+use (
+	./02.create-module/greetings
+	./02.create-module/hello
+)
