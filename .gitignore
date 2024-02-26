@@ -22,6 +22,8 @@ buildNumber.properties
 .mvn/timing.properties
 
 **/.gradle/**
+golang/**/*.sum
+
 
 # Eclipse Core
 .project
