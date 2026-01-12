@@ -1,0 +1,58 @@
+basePath: /
+definitions:
+  utils.SuccessResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      statusCode:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@codegear.info
+    name: API Support
+    url: http://www.codegear.info/support
+  description: Backend API service for codegear.info
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://swagger.io/terms/
+  title: CodeGear API
+  version: "1.0"
+paths:
+  /api/v1/ping:
+    get:
+      consumes:
+      - application/json
+      description: Check API connectivity
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.SuccessResponse'
+      summary: Ping check
+      tags:
+      - health
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Check if the server is running
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.SuccessResponse'
+      summary: Health check
+      tags:
+      - health
+schemes:
+- http
+- https
+swagger: "2.0"
