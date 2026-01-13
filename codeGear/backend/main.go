@@ -28,6 +28,9 @@ func main() {
 	// Initialize database
 	config.InitDatabase()
 
+	// Run migrations for auth models
+	config.MigrateAuthModels()
+
 	// Set Gin to release mode (change to debug mode during development)
 	// gin.SetMode(gin.ReleaseMode)
 	gin.SetMode(gin.DebugMode)

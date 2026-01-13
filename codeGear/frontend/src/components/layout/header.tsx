@@ -1,20 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { ThemeToggle } from "./theme-toggle";
+import { useAuth } from "@/contexts/auth-context";
 
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth();
 
   const navigation = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
   ];
+
+  const handleLogout = () => {
+    logout();
+    router.push('/');
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -56,8 +64,37 @@ export function Header() {
           ))}
         </div>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-4 lg:items-center">
           <ThemeToggle />
+          {isAuthenticated && user ? (
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                {user.picture ? (
+                  <img
+                    src={user.picture}
+                    alt={user.name}
+                    className="w-8 h-8 rounded-full"
+                  />
+                ) : (
+                  <UserCircleIcon className="w-8 h-8 text-gray-400" />
+                )}
+                <span className="text-sm font-medium">{user.name}</span>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="text-sm font-semibold text-foreground hover:text-primary-500 transition-colors"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              className="text-sm font-semibold text-foreground hover:text-primary-500 transition-colors"
+            >
+              Login
+            </Link>
+          )}
         </div>
       </nav>
 
@@ -101,6 +138,44 @@ export function Header() {
                       {item.name}
                     </Link>
                   ))}
+                </div>
+                <div className="py-6">
+                  {isAuthenticated && user ? (
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-3 px-3">
+                        {user.picture ? (
+                          <img
+                            src={user.picture}
+                            alt={user.name}
+                            className="w-10 h-10 rounded-full"
+                          />
+                        ) : (
+                          <UserCircleIcon className="w-10 h-10 text-gray-400" />
+                        )}
+                        <div>
+                          <p className="text-base font-semibold">{user.name}</p>
+                          <p className="text-sm text-muted-foreground">{user.email}</p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          setMobileMenuOpen(false);
+                        }}
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-foreground hover:bg-muted"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  ) : (
+                    <Link
+                      href="/login"
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-foreground hover:bg-muted"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Login
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>

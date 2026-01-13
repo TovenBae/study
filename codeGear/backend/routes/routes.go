@@ -24,5 +24,20 @@ func SetupRoutes(router *gin.Engine) {
 	v1 := router.Group("/api/v1")
 	{
 		v1.GET("/ping", controllers.PingCheck)
+
+		// Auth routes (public)
+		auth := v1.Group("/auth")
+		{
+			auth.GET("/google/url", controllers.GoogleLoginURL)
+			auth.GET("/google/callback", controllers.GoogleCallback)
+			auth.POST("/logout", controllers.Logout)
+		}
+
+		// Protected auth routes
+		authProtected := v1.Group("/auth")
+		authProtected.Use(middleware.AuthMiddleware())
+		{
+			authProtected.GET("/me", controllers.GetCurrentUser)
+		}
 	}
 }
